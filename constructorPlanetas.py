@@ -60,6 +60,143 @@ def setNombre(objeto, nuevo_nombre):
         print("El objeto pasado no tiene nombre.")
     return objeto
 
+def getNombre(objeto):
+    if "nombre" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        return objeto["nombre"]
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tienen nombre.")
+    else:
+        print("El objeto pasado no tiene nombre.")
+    return None
+
+def setRadio(objeto, nuevo_radio):
+    if type(nuevo_radio) != int or nuevo_radio <= 0:
+        print("Valor invalido: El radio tiene que ser un valor entero positivo.")
+    elif "nombre" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        objeto["radio"] = nuevo_radio
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tiene radio.")
+    else:
+        print("El objeto pasado no tiene radio.")
+    return objeto
+
+def getRadio(objeto):
+    if "radio" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        return objeto["radio"]
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tienen radio.")
+    else:
+        print("El objeto pasado no tiene radio.")
+    return None
+
+def setTam(objeto, nuevo_tam):
+    if type(nuevo_tam) != int or nuevo_tam <= 0:
+        print("Valor invalido: El tamaño tiene que ser un valor entero positivo.")
+    elif "tam" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        objeto["tam"] = nuevo_tam
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tiene tamaño.")
+    else:
+        print("El objeto pasado no tiene tamaño.")
+    return objeto
+
+def getTam(objeto):
+    if "tam" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        return objeto["tam"]
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tienen tamaño.")
+    else:
+        print("El objeto pasado no tiene tamaño.")
+    return None
+
+def setAngulo(objeto, nuevo_angulo):
+    if type(nuevo_angulo) != int or type(nuevo_angulo) != float:
+        print("Valor invalido: El angulo tiene que ser un valor numérico.")
+    elif "angulo" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        objeto["angulo"] = nuevo_angulo
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tiene angulo.")
+    else:
+        print("El objeto pasado no tiene angulo.")
+    return objeto
+
+def getAngulo(objeto):
+    if "angulo" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        return objeto["angulo"]
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tienen angulo.")
+    else:
+        print("El objeto pasado no tiene angulo.")
+    return None
+
+def setX(objeto, nuevo_X):
+    if type(nuevo_X) != int or type(nuevo_X) != float:
+        print("Valor invalido: X tiene que ser un valor numérico.")
+    elif "x" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        objeto["x"] = nuevo_X
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tiene x.")
+    else:
+        print("El objeto pasado no tiene x.")
+    return objeto
+
+def getX(objeto):
+    if "x" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        return objeto["x"]
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tienen x.")
+    else:
+        print("El objeto pasado no tiene x.")
+    return None
+
+def setY(objeto, nuevo_Y):
+    if type(nuevo_Y) != int or type(nuevo_Y) != float:
+        print("Valor invalido: Y tiene que ser un valor numérico.")
+    elif "y" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        objeto["y"] = nuevo_Y
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tiene y.")
+    else:
+        print("El objeto pasado no tiene y.")
+    return objeto
+
+def getY(objeto):
+    if "y" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        return objeto["y"]
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tienen y.")
+    else:
+        print("El objeto pasado no tiene y.")
+    return None
+
+# colores = (r,g,b) donde r, g y b son enteros <= 255 y >= 0
+def setColor(objeto, colores):
+    if type(colores) != tuple:
+        print("Valor invalido: Los colores van en una tupla.")
+        return objeto
+
+    for i in range(3):
+        if type(colores[i]) != int or colores[i] < 0 or colores[i] > 255:
+            print("Valor invalido: El código de color RGB son numeros enteros >= 0 y <= 255.")
+            return objeto
+
+    if "color" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        objeto["color"] = colores
+        # objeto["color"] = (r,g,b) si se pasan los valores individuales en la llamada
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tiene color.")
+    else:
+        print("El objeto pasado no tiene color.")
+    return objeto
+
+def getColor(objeto):
+    if "color" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
+        return objeto["color"]
+    elif "tipo" in objeto:
+        print("Objetos de tipo", objeto["tipo"], "no tienen color.")
+    else:
+        print("El objeto pasado no tiene color.")
+    return None
 
 mercurio = constructorPlanetas(nombre = "Mercurio", tam = 5, radio = 60, color = (243, 199, 80))
 venus = constructorPlanetas(nombre = "Venus", tam = 9, radio = 90, color = (0, 0, 0))
@@ -71,5 +208,7 @@ urano = constructorPlanetas(nombre = "Urano", tam = 23, radio = 600, color = (0,
 neptuno = constructorPlanetas(nombre = "Neptuno", tam = 20, radio = 700, color = (0, 0, 153))
 
 print(mercurio)
+print("Velocidad de mercurio:", getVelocidad(mercurio))
+mercurio = setVelocidad(objeto=mercurio, nueva_velocidad=30)
 print("Velocidad de mercurio:", getVelocidad(mercurio))
 
