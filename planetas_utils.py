@@ -1,4 +1,7 @@
 import random
+
+PROPORCION = 1
+
 def constructorPlanetas(nombre, tam, radio, color, v_angular = None, x = 0, y = 0, angulo = 0):
 
     v_angular = setVelocidad(nombre = nombre)
@@ -25,7 +28,11 @@ def setVelocidad(objeto=None, nueva_velocidad=None, nombre=None):
             "Jupiter": 0.0008,
             "Saturno": 0.0003,
             "Urano": 0.0001,
-            "Neptuno": 0.00006}
+            "Neptuno": 0.00006,
+            "Luna": 0.015}
+
+    for clave in astros.keys():
+        astros[clave]*=PROPORCION
 
     if nombre != None and nombre in astros and objeto == None:
         velocidad = astros[nombre]
@@ -110,7 +117,7 @@ def getTam(objeto):
     return None
 
 def setAngulo(objeto, nuevo_angulo):
-    if type(nuevo_angulo) != int or type(nuevo_angulo) != float:
+    if type(nuevo_angulo) != int and type(nuevo_angulo) != float:
         print("Valor invalido: El angulo tiene que ser un valor numérico.")
     elif "angulo" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
         objeto["angulo"] = nuevo_angulo
@@ -130,7 +137,7 @@ def getAngulo(objeto):
     return None
 
 def setX(objeto, nuevo_X):
-    if type(nuevo_X) != int or type(nuevo_X) != float:
+    if type(nuevo_X) != int and type(nuevo_X) != float:
         print("Valor invalido: X tiene que ser un valor numérico.")
     elif "x" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
         objeto["x"] = nuevo_X
@@ -150,7 +157,7 @@ def getX(objeto):
     return None
 
 def setY(objeto, nuevo_Y):
-    if type(nuevo_Y) != int or type(nuevo_Y) != float:
+    if type(nuevo_Y) != int and type(nuevo_Y) != float:
         print("Valor invalido: Y tiene que ser un valor numérico.")
     elif "y" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
         objeto["y"] = nuevo_Y
@@ -187,22 +194,6 @@ def setColor(objeto, nuevo_color):
         print("El objeto pasado no tiene color.")
     return objeto
 
-def setColor(objeto, color_x, color_y, color_z):
-    if color_x < 0 or color_x > 255 or type(color_x) != int:
-        print("El codigo de color tiene que ser 3 valores enteros entre 0 y 255.")
-    elif color_y < 0 or color_y > 255 or type(color_y) != int:
-        print("El codigo de color tiene que ser 3 valores enteros entre 0 y 255.")
-    elif color_z < 0 or color_z > 255 or type(color_z) != int:
-        print("El codigo de color tiene que ser 3 valores enteros entre 0 y 255.")
-
-    elif "color" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
-        objeto["color"] = (color_x,color_y,color_z)
-    elif "tipo" in objeto:
-        print("Objetos de tipo", objeto["tipo"], "no tiene color.")
-    else:
-        print("El objeto pasado no tiene color.")
-    return objeto
-
 def getColor(objeto):
     if "color" in objeto and "tipo" in objeto and objeto["tipo"] == "planeta":
         return objeto["color"]
@@ -211,7 +202,7 @@ def getColor(objeto):
     else:
         print("El objeto pasado no tiene color.")
     return None
-
+'''
 mercurio = constructorPlanetas(nombre = "Mercurio", tam = 5, radio = 60, color = (243, 199, 80))
 venus = constructorPlanetas(nombre = "Venus", tam = 9, radio = 90, color = (0, 0, 0))
 tierra = constructorPlanetas(nombre = "Tierra", tam = 12, radio = 145, color = (100, 149, 237))
@@ -225,4 +216,4 @@ print(mercurio)
 print("Velocidad de mercurio:", getVelocidad(mercurio))
 mercurio = setVelocidad(objeto=mercurio, nueva_velocidad=30)
 print("Velocidad de mercurio:", getVelocidad(mercurio))
-
+'''

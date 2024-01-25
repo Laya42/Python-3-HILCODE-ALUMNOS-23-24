@@ -1,8 +1,6 @@
 import pygame
 import math
 
-
-
 ANCHO = 1080
 ALTO = 720
 TAM = (ANCHO, ALTO)
