@@ -1,7 +1,6 @@
 import random
 
 PROPORCION = 1
-
 def constructorPlanetas(nombre, tam, radio, color, v_angular = None, x = 0, y = 0, angulo = 0):
 
     v_angular = setVelocidad(nombre = nombre)
@@ -38,7 +37,7 @@ def setVelocidad(objeto=None, nueva_velocidad=None, nombre=None):
         velocidad = astros[nombre]
         return velocidad
     elif nombre not in astros and objeto == None:
-        velocidad = 0.3/random.randint(1,100)
+        velocidad = 0.4/random.randint(1,100)
         return velocidad
 
     elif "tipo" in objeto and "nombre" in objeto and objeto["tipo"] == "planeta":

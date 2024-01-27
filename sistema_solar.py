@@ -1,6 +1,7 @@
 import planetas_utils
 import pygame
 import math
+import random
 
 ANCHO = 1080
 ALTO = 720
@@ -30,6 +31,14 @@ luna = planetas_utils.constructorPlanetas(nombre="Luna", tam=6, radio=25, color=
 
 planetas = [sol, mercurio, venus, tierra, marte, jupiter, saturno, urano, neptuno, luna]
 
+for i in range(5000):
+    planetas.append(planetas_utils.constructorPlanetas(nombre="Asteroide", tam=1, color=(255,255,255), radio = random.randint(235,365), angulo=random.randint(0,359)))
+
+for i in range(400):
+    planetas.append(planetas_utils.constructorPlanetas(nombre="Anillo", tam=1, color=(255,255,255), radio = random.randint(29,34), angulo=random.randint(0,359)))
+
+
+
 tiempo = 0
 ejecuta = True
 
@@ -46,21 +55,31 @@ while ejecuta == True:
                             (planetas_utils.getX(planeta),
                             planetas_utils.getY(planeta)),
                             planetas_utils.getTam(planeta))
+
         if planetas_utils.getNombre(planeta) == "Luna":
-            x, y = movimiento(  radio = planetas_utils.getRadio(planeta),
-                            centro_x = planetas_utils.getX(tierra),
-                            centro_y = planetas_utils.getY(tierra),
-                            angulo = planetas_utils.getAngulo(planeta))
+            centro_x = planetas_utils.getX(tierra)
+            centro_y = planetas_utils.getY(tierra)
+        elif planetas_utils.getNombre(planeta)=="Anillo":
+            centro_x = planetas_utils.getX(saturno)
+            centro_y = planetas_utils.getY(saturno)
         else:
-            x, y = movimiento(  radio = planetas_utils.getRadio(planeta),
-                                centro_x = CENTRO[0],
-                                centro_y = CENTRO[1],
-                                angulo = planetas_utils.getAngulo(planeta))
+            centro_x = planetas_utils.getX(sol)
+            centro_y = planetas_utils.getY(sol)
+
+        '''
+        centro_x = planetas_utils.getX(tierra) if planetas_utils.getNombre(planeta) == "Luna" else planetas_utils.getX(sol)
+        centro_y = planetas_utils.getY(tierra) if planetas_utils.getNombre(planeta) == "Luna" else planetas_utils.getY(sol)
+        '''
+
+        x, y = movimiento(  radio = planetas_utils.getRadio(planeta),
+                            centro_x = centro_x,
+                            centro_y = centro_y,
+                            angulo = planetas_utils.getAngulo(planeta))
 
         planeta = planetas_utils.setX(planeta, x)
         planeta = planetas_utils.setY(planeta, y)
 
-        nuevo_angulo = planetas_utils.getVelocidad(planeta) * tiempo
+        nuevo_angulo = planetas_utils.getVelocidad(planeta) + planetas_utils.getAngulo(planeta)
         planeta = planetas_utils.setAngulo(planeta, nuevo_angulo)
 
     for evento in pygame.event.get():
