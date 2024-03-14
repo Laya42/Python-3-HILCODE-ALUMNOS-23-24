@@ -166,21 +166,61 @@ def dibujos(posicion):
         dibujar_o(centro)
         jugada[0] = "X"
 
+def victoria(posicion):
+    ganador = " "
+    if tabla[0][0] == tabla[0][1] and tabla[0][1] == tabla[0][2]:
+        ganador = tabla[0][0]
+    elif tabla[1][0] == tabla[1][1] and tabla[1][1] == tabla[1][2]:
+        ganador = tabla[1][0]
+    elif tabla[2][0] == tabla[2][1] and tabla[2][1] == tabla[2][2]:
+        ganador = tabla[2][0]
+    elif tabla[0][0] == tabla[1][0] and tabla[1][0] == tabla[2][0]:
+        ganador = tabla[0][0]
+    elif tabla[0][1] == tabla[1][1] and tabla[1][1] == tabla[2][1]:
+        ganador = tabla[0][1]
+    elif tabla[0][2] == tabla[1][2] and tabla[1][2] == tabla[2][2]:
+        ganador = tabla[0][2]
+    elif tabla[0][0] == tabla[1][1] and tabla[1][1] == tabla[2][2]:
+        ganador = tabla[0][0]
+    elif tabla[0][2] == tabla[1][1] and tabla[1][1] == tabla[2][0]:
+        ganador = tabla[0][2]
+    else:
+        i = 0
+        j = 0
+        interrumpir = False
+        while i < len(tabla) and not interrumpir:
+            j = 0
+            while j < len(tabla[i]) and not interrumpir:
+                if type(tabla[i][j]) == int:
+                    interrumpir = True
+                elif i == 2 and j == 2:
+                    interrumpir = True
+                    ganador = "Empate"
+                j+=1
+            i+=1
+
+    return ganador
+
+
+
 jugada = ["X"]
 ejecuta = True
 tabla = crear_tabla()
+ganador = " "
 while ejecuta:
-    dibujar_tabla()
+    while ganador not in ("X","O","Empate") and ejecuta:
+        dibujar_tabla()
 
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            ejecuta = False
-        elif evento.type == MOUSEBUTTONDOWN:
-            posicion = click(evento.pos)
-            cambiar_posiciones(tabla, posicion)
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                ejecuta = False
+            elif evento.type == MOUSEBUTTONDOWN:
+                posicion = click(evento.pos)
+                cambiar_posiciones(tabla, posicion)
+                ganador = victoria(tabla)
 
+        pygame.display.update()
 
-    pygame.display.update()
 pygame.quit()
 
 
