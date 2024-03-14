@@ -1,5 +1,6 @@
 # Escribe tu código aquí :-)
 import pygame
+from pygame.locals import QUIT, MOUSEBUTTONDOWN
 from colores import *
 ANCHO = 300
 ALTO = 400
@@ -48,7 +49,6 @@ def dibujar_o(centro):
                     radius = 50,
                     center = centro)
 
-
 def posiciones_o(posicion):
     posiciones = [ [    [1,2,3],
                         [4,5,6],
@@ -75,9 +75,6 @@ def posiciones_o(posicion):
 
     return (x, y)
 
-
-
-
 def posiciones_x(posicion):
     posiciones = {  1: ([(0,0),(100,100)],[(0,100),(100,0)]),
                     2: ([(100,0),(200,100)], [(100,100),(200,0)]),
@@ -93,11 +90,98 @@ def posiciones_x(posicion):
     r2 = posiciones[posicion][1]
     return r1, r2
 
-dibujar_tabla()
-for i in range(1,10):
-    r1, r2 = posiciones_x(i)
-    dibujar_x(r1, r2)
-for i in range(1,10):
-    centro = posiciones_o(i)
-    dibujar_o(centro)
-pygame.display.update()
+def click(punto):
+        x = punto[0]
+        y = punto[1]
+
+        posicion = None
+        if (x >= 0 and x < 100) and (y >= 0 and y < 100):
+            posicion = 1
+        elif (x >= 100 and x < 200) and (y >= 0 and y < 100):
+            posicion = 2
+        elif (x >= 200 and x < 300) and (y >= 0 and y < 100):
+            posicion = 3
+
+        elif (x >= 0 and x < 100) and (y >= 100 and y < 200):
+            posicion = 4
+        elif (x >= 100 and x < 200) and (y >= 100 and y < 200):
+            posicion = 5
+        elif (x >= 200 and x < 300) and (y >= 100 and y < 200):
+            posicion = 6
+
+        elif (x >= 0 and x < 100) and (y >= 200 and y < 300):
+            posicion = 7
+        elif (x >= 100 and x < 200) and (y >= 200 and y < 300):
+            posicion = 8
+        elif (x >= 200 and x < 300) and (y >= 200 and y < 300):
+            posicion = 9
+
+        return posicion
+
+def crear_tabla():
+    tabla = list()
+    num = 1
+
+    for i in range(3):
+        fila = list()
+
+        for i in range(3):
+            fila.append(num)
+            num+=1
+        tabla.append(fila)
+    return tabla
+
+def cambiar_posiciones(tabla, posicion):
+    for i in range(len(tabla)):
+        for j in range(len(tabla[i])):
+            if tabla[i][j] == posicion:
+                tabla[i][j] = jugada[0]
+                dibujos(posicion)
+                break
+
+    # Optimizado
+    """
+    i = 0
+    encontrado = False
+    while i < len(tabla) and not encontrado:
+        j = 0
+        while j < len(tabla[i]):
+            if tabla[i][j] == posicion:
+                tabla[i][j] = jugada[0]
+                dibujos(posicion)
+                encontrado = True
+            elif type(tabla[i][j]) == int and tabla[i][j] > posicion:
+                encontrado = True
+            j+=1
+        i+=1
+    """
+
+def dibujos(posicion):
+    if jugada[0] == "X":
+        r1, r2 = posiciones_x(posicion)
+        dibujar_x(r1, r2)
+        jugada[0] = "O"
+    else:
+        centro = posiciones_o(posicion)
+        dibujar_o(centro)
+        jugada[0] = "X"
+
+jugada = ["X"]
+ejecuta = True
+tabla = crear_tabla()
+while ejecuta:
+    dibujar_tabla()
+
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            ejecuta = False
+        elif evento.type == MOUSEBUTTONDOWN:
+            posicion = click(evento.pos)
+            cambiar_posiciones(tabla, posicion)
+
+
+    pygame.display.update()
+pygame.quit()
+
+
+
