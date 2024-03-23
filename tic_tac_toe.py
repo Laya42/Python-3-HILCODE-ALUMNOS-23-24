@@ -2,6 +2,8 @@
 import pygame
 from pygame.locals import QUIT, MOUSEBUTTONDOWN
 from colores import *
+
+pygame.init()
 ANCHO = 300
 ALTO = 400
 ANCHO_RAYA = 100
@@ -118,6 +120,41 @@ def click(punto):
 
         return posicion
 
+def victoria(posicion):
+    ganador = " "
+    if tabla[0][0] == tabla[0][1] and tabla[0][1] == tabla[0][2]:
+        ganador = tabla[0][0]
+    elif tabla[1][0] == tabla[1][1] and tabla[1][1] == tabla[1][2]:
+        ganador = tabla[1][0]
+    elif tabla[2][0] == tabla[2][1] and tabla[2][1] == tabla[2][2]:
+        ganador = tabla[2][0]
+    elif tabla[0][0] == tabla[1][0] and tabla[1][0] == tabla[2][0]:
+        ganador = tabla[0][0]
+    elif tabla[0][1] == tabla[1][1] and tabla[1][1] == tabla[2][1]:
+        ganador = tabla[0][1]
+    elif tabla[0][2] == tabla[1][2] and tabla[1][2] == tabla[2][2]:
+        ganador = tabla[0][2]
+    elif tabla[0][0] == tabla[1][1] and tabla[1][1] == tabla[2][2]:
+        ganador = tabla[0][0]
+    elif tabla[0][2] == tabla[1][1] and tabla[1][1] == tabla[2][0]:
+        ganador = tabla[0][2]
+    else:
+        i = 0
+        j = 0
+        interrumpir = False
+        while i < len(tabla) and not interrumpir:
+            j = 0
+            while j < len(tabla[i]) and not interrumpir:
+                if type(tabla[i][j]) == int:
+                    interrumpir = True
+                elif i == 2 and j == 2:
+                    interrumpir = True
+                    ganador = "Empate"
+                j+=1
+            i+=1
+
+    return ganador
+
 def crear_tabla():
     tabla = list()
     num = 1
@@ -201,16 +238,37 @@ def victoria(posicion):
 
     return ganador
 
+# Función para mostrar el mensaje del ganador
+def mostrar_mensaje_ganador(mensaje):
+    fuente = pygame.font.Font(None, 36)
+    texto = fuente.render(mensaje, True, getColor("ROJO"))
+    rectangulo_texto = texto.get_rect(center=(ANCHO // 2, ALTO - 50))
+    VENTANA.blit(texto, rectangulo_texto)
 
+# Función para mostrar el botón "Jugar de Nuevo"
+def mostrar_boton_jugar_nuevo():
+    x_centro = (ANCHO // 2) - 65
+    y_centro = ALTO - 35
+    ancho_boton = 130
+    alto_boton = 30
+    pygame.draw.rect(VENTANA, getColor("SALMON"), (x_centro , y_centro, ancho_boton, alto_boton))
+    fuente = pygame.font.Font(None, 24)
+    texto = fuente.render('Jugar de Nuevo', True, getColor("BLANCO"))
+    rectangulo_texto = texto.get_rect(center=(ANCHO // 2, ALTO - 20))
+    VENTANA.blit(texto, rectangulo_texto)
 
 jugada = ["X"]
 ejecuta = True
 tabla = crear_tabla()
-ganador = " "
-while ejecuta:
-    while ganador not in ("X","O","Empate") and ejecuta:
-        dibujar_tabla()
 
+ganador = victoria(tabla)
+while ejecuta:
+    dibujar_tabla()
+    for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                ejecuta = False
+
+    while not(ganador in ("X","O","Empate")) and ejecuta:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 ejecuta = False
@@ -218,8 +276,12 @@ while ejecuta:
                 posicion = click(evento.pos)
                 cambiar_posiciones(tabla, posicion)
                 ganador = victoria(tabla)
-
         pygame.display.update()
+
+    mostrar_boton_jugar_nuevo()
+    mensaje = f"El ganador ha sido {ganador}" if ganador != "Empate" else "Empate"
+    mostrar_mensaje_ganador(mensaje)
+    pygame.display.update()
 
 pygame.quit()
 
