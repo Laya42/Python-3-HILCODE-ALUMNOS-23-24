@@ -247,15 +247,40 @@ def mostrar_mensaje_ganador(mensaje):
 
 # Función para mostrar el botón "Jugar de Nuevo"
 def mostrar_boton_jugar_nuevo():
-    x_centro = (ANCHO // 2) - 65
-    y_centro = ALTO - 35
     ancho_boton = 130
     alto_boton = 30
+    x_centro = (ANCHO // 2) - ancho_boton//2
+    y_centro = ALTO - 35
+
     pygame.draw.rect(VENTANA, getColor("SALMON"), (x_centro , y_centro, ancho_boton, alto_boton))
     fuente = pygame.font.Font(None, 24)
     texto = fuente.render('Jugar de Nuevo', True, getColor("BLANCO"))
     rectangulo_texto = texto.get_rect(center=(ANCHO // 2, ALTO - 20))
     VENTANA.blit(texto, rectangulo_texto)
+
+    return ancho_boton, alto_boton, x_centro, y_centro
+
+def area_boton(ancho_boton, alto_boton, x_centro, y_centro):
+    min_x = x_centro - (ancho_boton//2)
+    max_x = x_centro + (ancho_boton//2)
+    min_y = y_centro - (alto_boton//2)
+    max_y = y_centro + (alto_boton//2)
+
+    return min_x, max_x, min_y, max_y
+
+def reiniciar(min_x, max_x, min_y, max_y, punto, tabla):
+    x = punto[0]
+    y = punto[1]
+    print(x, y)
+    print(min_x, max_x, min_y, max_y)
+    if (x >= min_x and x <= max_x) and (y >= min_y and y <= max_y):
+        print("a")
+        tabla = crear_tabla()
+        VENTANA.fill((getColor("BLANCO")))
+        dibujar_tabla()
+    return tabla
+
+
 
 jugada = ["X"]
 ejecuta = True
@@ -278,9 +303,16 @@ while ejecuta:
                 ganador = victoria(tabla)
         pygame.display.update()
 
-    mostrar_boton_jugar_nuevo()
+    ancho_boton, alto_boton, x_centro, y_centro = mostrar_boton_jugar_nuevo()
     mensaje = f"El ganador ha sido {ganador}" if ganador != "Empate" else "Empate"
     mostrar_mensaje_ganador(mensaje)
+
+    for evento in pygame.event.get():
+        if evento.type == MOUSEBUTTONDOWN:
+
+            min_x, max_x, min_y, max_y = area_boton(ancho_boton, alto_boton, x_centro, y_centro)
+            tabla = reiniciar(min_x, max_x, min_y, max_y, evento.pos, tabla)
+            ganador = victoria(tabla)
     pygame.display.update()
 
 pygame.quit()
