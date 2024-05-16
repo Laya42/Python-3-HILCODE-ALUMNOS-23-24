@@ -19,7 +19,7 @@ VENTANA.fill((colores.getColor("NEGRO")))
 plataforma = Plataforma.constructor(color = colores.getColor("AZUL"),
                                     ancho = 100,
                                     alto = 20,
-                                    x = 400,
+                                    x = 350,
                                     y = 550,
                                     velocidad = 7)
 
