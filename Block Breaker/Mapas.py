@@ -1,0 +1,10 @@
+mapa1 = [[True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True],
+         [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]]

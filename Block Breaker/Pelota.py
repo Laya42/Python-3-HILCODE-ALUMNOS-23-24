@@ -69,7 +69,7 @@ def getX(objeto):
     return None
 
 def setX(objeto, nuevoX):
-    if checkTipo(objeto) and type(nuevoX) == int and nuevoX >= 0:
+    if checkTipo(objeto) and type(nuevoX) in (float, int) and nuevoX >= 0:
         objeto["x"] = nuevoX
     elif not(type(nuevoX) == int and nuevoX >= 0):
         print("El valor de X debe ser un entero positivo.")
@@ -88,7 +88,7 @@ def getY(objeto):
     return None
 
 def setY(objeto, nuevoY):
-    if checkTipo(objeto) and type(nuevoY) == int and nuevoY >= 0:
+    if checkTipo(objeto) and type(nuevoY) in (float, int) and nuevoY >= 0:
         objeto["y"] = nuevoY
     elif not(type(nuevoY) == int and nuevoY >= 0):
         print("El valor de Y debe ser un entero positivo.")
@@ -107,7 +107,7 @@ def getVelocidad(objeto):
     return None
 
 def setVelocidad(objeto, nuevaVelocidad):
-    if checkTipo(objeto) and type(nuevaVelocidad) == int and nuevaVelocidad >= 0:
+    if checkTipo(objeto) and type(nuevaVelocidad) in (float, int) and nuevaVelocidad >= 0:
         objeto["velocidad"] = nuevaVelocidad
     elif not(type(nuevaVelocidad) == int and nuevaVelocidad >= 0):
         print("La velocidad debe ser un valor entero positivo")

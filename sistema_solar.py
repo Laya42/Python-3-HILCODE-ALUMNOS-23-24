@@ -89,6 +89,3 @@ while ejecuta == True:
     pygame.display.update()
     tiempo += 1 # tiempo = tiempo + 1
 pygame.quit()
-
-
-
