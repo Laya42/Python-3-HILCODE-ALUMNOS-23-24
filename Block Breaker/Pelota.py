@@ -107,10 +107,10 @@ def getVelocidad(objeto):
     return None
 
 def setVelocidad(objeto, nuevaVelocidad):
-    if checkTipo(objeto) and type(nuevaVelocidad) in (float, int) and nuevaVelocidad >= 0:
+    if checkTipo(objeto) and type(nuevaVelocidad) in (float, int):
         objeto["velocidad"] = nuevaVelocidad
-    elif not(type(nuevaVelocidad) == int and nuevaVelocidad >= 0):
-        print("La velocidad debe ser un valor entero positivo")
+    elif not(type(nuevaVelocidad) in (float, int)):
+        print("La velocidad debe ser un valor numérico")
     elif "tipo" in objeto:
         print("Objetos de tipo", objeto["tipo"], "no tienen velocidad.")
     else:
